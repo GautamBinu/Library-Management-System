@@ -1,0 +1,66 @@
+﻿
+CREATE DATABASE IF NOT EXISTS Library;
+
+
+USE Library;
+
+
+CREATE TABLE IF NOT EXISTS BookRecord (
+    BookID VARCHAR(20) PRIMARY KEY,
+    BookName VARCHAR(100) NOT NULL,
+    Author VARCHAR(100) NOT NULL,
+    Publisher VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS UserRecord (
+    UserID VARCHAR(20) PRIMARY KEY,
+    UserName VARCHAR(100) NOT NULL,
+    Password VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS AdminRecord (
+    AdminID VARCHAR(20) PRIMARY KEY,
+    Password VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS IssuedBooks (
+    BookID VARCHAR(20),
+    UserID VARCHAR(20),
+    IssueDate DATE NOT NULL,
+    PRIMARY KEY (BookID, UserID),
+    FOREIGN KEY (BookID) REFERENCES BookRecord(BookID),
+    FOREIGN KEY (UserID) REFERENCES UserRecord(UserID)
+);
+
+
+CREATE TABLE IF NOT EXISTS Feedback (
+    FeedbackID INT AUTO_INCREMENT PRIMARY KEY,
+    FeedbackText TEXT NOT NULL,
+    SubmissionDate DATETIME NOT NULL
+);
+
+INSERT INTO BookRecord (BookID, BookName, Author, Publisher) VALUES
+('B001', 'To Kill a Mockingbird', 'Harper Lee', 'J. B. Lippincott & Co.'),
+('B002', '1984', 'George Orwell', 'Secker & Warburg'),
+('B003', 'Pride and Prejudice', 'Jane Austen', 'T. Egerton, Whitehall'),
+('B004', 'The Great Gatsby', 'F. Scott Fitzgerald', 'Charles Scribner''s Sons'),
+('B005', 'Harry Potter and the Philosopher''s Stone', 'J.K. Rowling', 'Bloomsbury');
+
+
+INSERT INTO UserRecord (UserID, UserName, Password) VALUES
+('U001', 'John Doe', 'password123'),
+('U002', 'Jane Smith', 'securepass'),
+('U003', 'Bob Johnson', 'userpass');
+
+
+INSERT INTO AdminRecord (AdminID, Password) VALUES
+('A001', 'adminpass'),
+('A002', 'strongadmin');
+
+
+INSERT INTO Feedback (FeedbackText, SubmissionDate) VALUES
+('Great library system!', '2023-05-01 10:30:00'),
+('The book collection is excellent.', '2023-05-02 14:45:00');
